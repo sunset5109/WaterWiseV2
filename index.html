@@ -75,41 +75,41 @@ var CROPS = {
 };
 
 var MR = [
-  {id:1,tag:"MR1",title:"FNO Convergence",badge:"Slope -1.34, R\u00b2=0.927",
+  {id:1,tag:"MR1",title:"FNO Convergence",badge:"Slope -1.34, R²=0.927",
    latex:"\\|\\mathcal{G}^\\dagger - \\mathcal{G}_N\\| \\leq N^{-s/d}",
-   note:"Sobolev s=3, d=2 gives theoretical slope \u22121.5. Empirical: \u22121.34.",
+   note:"Sobolev s=3, d=2 gives theoretical slope −1.5. Empirical: −1.34.",
    rows:[["Empirical slope","-1.34"],["Theoretical","-1.50"],["R-squared","0.927"],["Deviation","10.7%"]],
-   insight:"10.7% shallowing vs theory is attributable to SMAP 9km resolution. R\u00b2=0.927 confirms power-law scaling."},
+   insight:"10.7% shallowing vs theory is attributable to SMAP 9km resolution. R²=0.927 confirms power-law scaling."},
   {id:2,tag:"MR2",title:"Lipschitz Stability",badge:"L = -0.487, All stable",
    latex:"\\|\\delta\\theta(t)\\| \\leq \\varepsilon \\cdot e^{Lt}, \\quad L < 0",
    note:"Negative L means perturbations decay exponentially.",
-   rows:[["Lipschitz L","-0.487"],["Perturbations","\u00b15% to \u00b120%"],["Steps to <2% err","3"],["Worst error","<1.8%"]],
+   rows:[["Lipschitz L","-0.487"],["Perturbations","±5% to ±20%"],["Steps to <2% err","3"],["Worst error","<1.8%"]],
    insight:"All perturbation levels converged near-zero by step 3. Sensor noise absorbed without destabilizing forecast."},
   {id:3,tag:"MR3",title:"Uncertainty Bounds",badge:"97.3% within theory",
    latex:"\\text{Var}[\\theta(x,t)] \\leq \\sigma_{\\max}^2 \\cdot t \\cdot |\\Omega| \\cdot C",
-   note:"From It\u00f4\u2019s lemma on the stochastic Richards equation.",
-   rows:[["Within bounds","97.3%"],["Monte Carlo N","500"],["Grid","32\u00d732"],["Mean error","<0.001 m\u00b3/m\u00b3"]],
+   note:"From Itô’s lemma on the stochastic Richards equation.",
+   rows:[["Within bounds","97.3%"],["Monte Carlo N","500"],["Grid","32×32"],["Mean error","<0.001 m³/m³"]],
    insight:"2.7% exceedances occur at sharp clay-sand boundaries. Bound holds globally for uniform soils."},
   {id:4,tag:"MR4",title:"Fokker-Planck",badge:"KL = 0.047 < 0.10",
    latex:"\\frac{\\partial p}{\\partial t} = -\\nabla\\cdot(f(\\theta)p) + \\frac{1}{2}\\nabla^2(\\sigma^2(\\theta)p)",
    note:"KL < 0.10 confirms match with theoretical distribution.",
-   rows:[["KL divergence","0.047"],["Pass threshold","< 0.10"],["Distribution center","\u03b8 \u2248 0.226"],["Tail failure","< 2%"]],
+   rows:[["KL divergence","0.047"],["Pass threshold","< 0.10"],["Distribution center","θ ≈ 0.226"],["Tail failure","< 2%"]],
    insight:"KL=0.047 validates that the learned noise function captures full uncertainty structure across the soil domain."},
-  {id:5,tag:"MR5",title:"Lyapunov Stability",badge:"\u03bb=0.0375/day, R\u00b2=0.97",
+  {id:5,tag:"MR5",title:"Lyapunov Stability",badge:"λ=0.0375/day, R²=0.97",
    latex:"V(\\theta) = \\|\\theta - \\theta^*\\|^2, \\quad \\frac{dV}{dt} \\leq -\\lambda V + C\\sigma^2",
-   note:"V decreasing means \u03b8 converges to target.",
+   note:"V decreasing means θ converges to target.",
    rows:[["Decay rate","0.0375/day"],["V reduction","67% over 30 days"],["R-squared","0.97"],["Starting deficit","40% below target"]],
-   insight:"67% Lyapunov reduction proves exponential convergence. Neural MPC beat threshold (\u221223%) and PID (\u221241%)."},
+   insight:"67% Lyapunov reduction proves exponential convergence. Neural MPC beat threshold (−23%) and PID (−41%)."},
   {id:6,tag:"MR6",title:"Safety Guarantee",badge:"0 violations / 1000 sims",
    latex:"P\\bigl(\\theta(t) \\geq \\theta_{\\text{crit}}\\bigr) \\geq 1 - \\delta, \\quad \\delta = 0.05",
-   note:"\u03b8_crit = 0.20 m\u00b3/m\u00b3. Safety requires \u226595% probability.",
-   rows:[["MPC violations","0 / 1000"],["Max allowed","50 / 1000"],["Hardware min","0.200 m\u00b3/m\u00b3"],["Wilting events","0"]],
+   note:"θ_crit = 0.20 m³/m³. Safety requires ≥95% probability.",
+   rows:[["MPC violations","0 / 1000"],["Max allowed","50 / 1000"],["Hardware min","0.200 m³/m³"],["Wilting events","0"]],
    insight:"Zero violations in simulation and hardware. MPC operated at, never below, the wilting constraint."},
   {id:7,tag:"MR7",title:"Economic Optimality",badge:"-13.2% vs PID, $99M / 500K ha",
    latex:"\\min_u \\mathbb{E}\\!\\left[\\int_0^T \\alpha u^2 + \\beta(\\theta - \\theta^*)^2\\,dt\\right]",
-   note:"\u03b1=0.5 (water cost), \u03b2=2.0 (moisture tracking). Receding-horizon MPC.",
-   rows:[["Threshold","0.409 m\u00b3/event"],["PID","0.364 m\u00b3/event"],["Neural MPC","0.355 m\u00b3/event"],["vs PID","-13.2%"]],
-   insight:"At 500K-ha: 660M m\u00b3 water saved, $99M annual savings, 244K tons CO\u2082 reduced. Zero crop health compromise."}
+   note:"α=0.5 (water cost), β=2.0 (moisture tracking). Receding-horizon MPC.",
+   rows:[["Threshold","0.409 m³/event"],["PID","0.364 m³/event"],["Neural MPC","0.355 m³/event"],["vs PID","-13.2%"]],
+   insight:"At 500K-ha: 660M m³ water saved, $99M annual savings, 244K tons CO₂ reduced. Zero crop health compromise."}
 ];
 
 var PLANTS = [
@@ -450,7 +450,7 @@ function HomePage(props) {
             {[
               {n:"01",icon:"M12 2C12 2 4 10 4 15a8 8 0 0 0 16 0C20 10 12 2 12 2z",title:"Soil Forecast",desc:"A Fourier Neural Operator trained on 9 years of NASA SMAP satellite data predicts soil moisture 7 days ahead for your exact soil, crop, and weather conditions."},
               {n:"02",icon:"M3 12h18M3 6l9-4 9 4M3 18l9 4 9-4",title:"Uncertainty Quantified",desc:"500 Monte Carlo simulations in ~1.5 seconds give 90% confidence intervals. Probabilistic bounds backed by stochastic differential equation theory."},
-              {n:"03",icon:"M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4",title:"Irrigation Planned",desc:"Model Predictive Control minimizes water use while keeping P(soil \u2265 wilting point) \u2265 95%. Prevents deficits before they happen, not after."}
+              {n:"03",icon:"M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4",title:"Irrigation Planned",desc:"Model Predictive Control minimizes water use while keeping P(soil ≥ wilting point) ≥ 95%. Prevents deficits before they happen, not after."}
             ].map(function(item) {
               return (
                 <div key={item.n}>
@@ -584,7 +584,7 @@ function InnerHero(props) {
 }
 
 function AnalysisPage(props) {
-  var _tab=useState("inputs"); var tab=_tab[0]; var setTab=_tab[1];
+  var _step=useState(1); var step=_step[0]; var setStep=_step[1];
   var _reg=useState("Kentucky, USA"); var reg=_reg[0]; var setReg=_reg[1];
   var _sk=useState("Loam"); var sk=_sk[0]; var setSk=_sk[1];
   var _ck=useState("Corn"); var ck=_ck[0]; var setCk=_ck[1];
@@ -597,7 +597,7 @@ function AnalysisPage(props) {
   var _mpc=useState([]); var mpc=_mpc[0]; var setMpc=_mpc[1];
   var _thr=useState([]); var thr=_thr[0]; var setThr=_thr[1];
   var _bands=useState([]); var bands=_bands[0]; var setBands=_bands[1];
-  var _ran=useState(false); var ran=_ran[0]; var setRan=_ran[1];
+  var _loading=useState(false); var loading=_loading[0]; var setLoading=_loading[1];
 
   var rd=SITES.find(function(s){return s.name===reg;})||SITES[0];
   var soil=SOILS[sk]||SOILS["Loam"];
@@ -607,118 +607,264 @@ function AnalysisPage(props) {
   var savPct=Math.max(5,Math.min(40,rd.s+(rain-80)/70-(temp-25)/12));
   var wSaved=Math.round(ha*rd.base*savPct/100);
   var cSaved=Math.round(wSaved*rd.cost);
+  var irrStatus=th<soil.wp+0.02?"Critical — near wilting":th<crop.tgt-0.04?"Deficit — irrigate soon":th<crop.tgt?"Adequate":"Optimal";
+  var irrColor=th<soil.wp+0.02?"#dc2626":th<crop.tgt-0.04?"#f97316":th<crop.tgt?"#0d9488":GREEN;
 
-  function run() {
-    var e=calcETo(temp,wind,rh);
-    var m=runMPC(th,sk,ck,e,rain);
-    var t=runThr(th,sk,ck,e,rain);
-    setMpc(m); setThr(t); setBands(getBands(m));
-    setRan(true); setTab("forecast");
+  function runForecast() {
+    setLoading(true);
+    setTimeout(function() {
+      var e=calcETo(temp,wind,rh);
+      var m=runMPC(th,sk,ck,e,rain);
+      var t=runThr(th,sk,ck,e,rain);
+      setMpc(m); setThr(t); setBands(getBands(m));
+      setLoading(false); setStep(3);
+    }, 900);
   }
 
-  var TABS=[{id:"inputs",label:"Inputs"},{id:"forecast",label:"Forecast"},{id:"impact",label:"Impact"}];
-  var inpStyle={width:"100%",padding:"8px 10px",border:"1px solid #e5e7eb",borderRadius:"8px",fontSize:"13px",background:"#fafafa",color:"#111827",outline:"none"};
+  var inpStyle={width:"100%",padding:"10px 12px",border:"1px solid #e5e7eb",borderRadius:"8px",fontSize:"13px",background:"#fff",color:"#111827",outline:"none"};
+  var STEPS=["Location & Crop","Conditions","Forecast","Impact"];
+
   return (
     <div>
       <InnerHero label="Irrigation Calculator" title="Analyze Your Farm"
-        sub="Enter conditions and run a 7-day Neural MPC forecast with 90% confidence intervals."
-        tabs={TABS} activeTab={tab} onTab={setTab}/>
-      <div style={{maxWidth:"1060px",margin:"0 auto",padding:"32px 40px 72px"}}>
-        {tab==="inputs"&&(
-          <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"16px"}}>
-            <Card title="Location and Crop">
-              <SelectRow label="Region" value={reg} onChange={setReg} options={SITES.map(function(s){return s.name;})}/>
-              <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"10px"}}>
-                <SelectRow label="Soil Type" value={sk} onChange={setSk} options={Object.keys(SOILS)}/>
-                <SelectRow label="Crop" value={ck} onChange={setCk} options={Object.keys(CROPS)}/>
-              </div>
-              <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:"8px",marginTop:"12px"}}>
-                {[["Wilting pt",soil.wp.toFixed(2)],["Field cap",soil.fc.toFixed(2)],["Target",crop.tgt.toFixed(2)]].map(function(item) {
+        sub="Step-by-step 7-day Neural MPC forecast with 90% confidence intervals."/>
+      <div style={{maxWidth:"860px",margin:"0 auto",padding:"32px 40px 72px"}}>
+
+        {/* Step indicator */}
+        <div style={{display:"flex",alignItems:"center",marginBottom:"32px"}}>
+          {STEPS.map(function(s,i) {
+            var active=step===i+1, done=step>i+1;
+            return (
+              <React.Fragment key={s}>
+                <div style={{display:"flex",flexDirection:"column",alignItems:"center",gap:"5px"}}>
+                  <div style={{width:"32px",height:"32px",borderRadius:"50%",display:"flex",alignItems:"center",justifyContent:"center",
+                    background:done?GREEN:active?"#064e3b":"#e5e7eb",
+                    color:done||active?"#fff":"#9ca3af",fontWeight:"700",fontSize:"13px",cursor:done?"pointer":"default"}}
+                    onClick={function(){if(done)setStep(i+1);}}>
+                    {done?"✓":i+1}
+                  </div>
+                  <div style={{fontSize:"11px",fontWeight:"600",color:active?"#064e3b":done?GREEN:"#9ca3af",whiteSpace:"nowrap"}}>{s}</div>
+                </div>
+                {i<STEPS.length-1&&<div style={{flex:"1",height:"2px",background:done?GREEN:"#e5e7eb",margin:"0 6px",marginBottom:"18px"}}/>}
+              </React.Fragment>
+            );
+          })}
+        </div>
+
+        {/* Step 1: Location & Crop */}
+        {step===1&&(
+          <div style={{background:"#fff",border:"1px solid #e5e7eb",borderRadius:"16px",padding:"28px"}}>
+            <div style={{fontSize:"17px",fontWeight:"700",color:"#111827",marginBottom:"20px"}}>Where is your farm, and what are you growing?</div>
+            <SelectRow label="Region" value={reg} onChange={setReg} options={SITES.map(function(s){return s.name;})}/>
+            <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"12px",marginBottom:"16px"}}>
+              <SelectRow label="Soil Type" value={sk} onChange={setSk} options={Object.keys(SOILS)}/>
+              <SelectRow label="Crop" value={ck} onChange={setCk} options={Object.keys(CROPS)}/>
+            </div>
+
+            {/* Soil + Crop summary cards */}
+            <div style={{background:"#f0fdf4",border:"1px solid #a7f3d0",borderRadius:"12px",padding:"16px",marginBottom:"20px"}}>
+              <div style={{fontSize:"12px",fontWeight:"700",color:"#065f46",textTransform:"uppercase",letterSpacing:"0.5px",marginBottom:"10px"}}>Soil &amp; Crop Profile</div>
+              <div style={{display:"grid",gridTemplateColumns:"repeat(5,1fr)",gap:"8px"}}>
+                {[
+                  ["Wilting pt", soil.wp.toFixed(2)+" m\xb3/m\xb3"],
+                  ["Field cap",  soil.fc.toFixed(2)+" m\xb3/m\xb3"],
+                  ["Saturation", soil.sat.toFixed(2)+" m\xb3/m\xb3"],
+                  ["Crop target",crop.tgt.toFixed(2)+" m\xb3/m\xb3"],
+                  ["Root depth", crop.rd.toFixed(1)+" m"]
+                ].map(function(item) {
                   return (
-                    <div key={item[0]} style={{background:"#f9fafb",borderRadius:"8px",padding:"10px",textAlign:"center"}}>
-                      <div style={{fontSize:"10px",color:GRAY,textTransform:"uppercase",letterSpacing:"0.3px"}}>{item[0]}</div>
-                      <div style={{fontSize:"16px",fontWeight:"700",color:GREEN,fontFamily:"monospace",marginTop:"2px"}}>{item[1]}</div>
+                    <div key={item[0]} style={{background:"#fff",borderRadius:"8px",padding:"10px",textAlign:"center"}}>
+                      <div style={{fontSize:"9px",color:GRAY,textTransform:"uppercase",letterSpacing:"0.3px",marginBottom:"4px"}}>{item[0]}</div>
+                      <div style={{fontSize:"13px",fontWeight:"700",color:GREEN,fontFamily:"monospace"}}>{item[1]}</div>
                     </div>
                   );
                 })}
               </div>
-            </Card>
-            <Card title="Weather Conditions">
-              <SliderRow label="Soil Moisture (m\u00b3/m\u00b3)" value={th} onChange={setTh} min={0.10} max={0.44} step={0.01} display={th.toFixed(2)}/>
-              <SliderRow label="Temperature (\u00b0C)" value={temp} onChange={setTemp} min={-5} max={50} step={1} display={temp+"\u00b0C"}/>
-              <SliderRow label="Rainfall (mm/month)" value={rain} onChange={setRain} min={0} max={400} step={5} display={rain+"mm"}/>
-              <SliderRow label="Wind Speed (km/h)" value={wind} onChange={setWind} min={0} max={80} step={1} display={wind+"km/h"}/>
-              <SliderRow label="Humidity (%)" value={rh} onChange={setRh} min={10} max={100} step={5} display={rh+"%"}/>
-              <div style={{background:"#f9fafb",borderRadius:"8px",padding:"8px 12px",marginTop:"8px",fontSize:"12px",color:GRAY}}>
-                ET\u2080: <strong style={{color:GREEN,fontFamily:"monospace"}}>{eto.toFixed(2)} mm/day</strong>
-                {"  "}ETc: <strong style={{color:GREEN,fontFamily:"monospace"}}>{(eto*crop.kc).toFixed(2)} mm/day</strong>
-              </div>
-            </Card>
-            <Card title="Farm Size">
-              <div style={{fontSize:"11px",fontWeight:"600",color:GRAY,textTransform:"uppercase",letterSpacing:"0.5px",marginBottom:"6px"}}>Hectares</div>
+            </div>
+
+            <div style={{marginBottom:"20px"}}>
+              <div style={{fontSize:"11px",fontWeight:"600",color:GRAY,textTransform:"uppercase",letterSpacing:"0.5px",marginBottom:"6px"}}>Farm Size (hectares)</div>
               <input type="number" value={ha} min="0.1" max="500000" onChange={function(e){setHa(Math.max(0.1,Number(e.target.value)));}} style={inpStyle}/>
-            </Card>
-            <div style={{display:"flex",alignItems:"flex-end"}}>
-              <button onClick={run} style={{width:"100%",padding:"16px",background:GREEN,color:"#fff",border:"none",borderRadius:"12px",fontWeight:"700",fontSize:"15px",boxShadow:"0 4px 14px rgba(5,150,105,0.3)"}}>
-                Run Neural MPC Forecast
+            </div>
+
+            <button onClick={function(){setStep(2);}} style={{width:"100%",padding:"14px",background:GREEN,color:"#fff",border:"none",borderRadius:"10px",fontWeight:"700",fontSize:"15px"}}>
+              Next: Enter Conditions &rarr;
+            </button>
+          </div>
+        )}
+
+        {/* Step 2: Weather & Soil Conditions */}
+        {step===2&&(
+          <div style={{background:"#fff",border:"1px solid #e5e7eb",borderRadius:"16px",padding:"28px"}}>
+            <div style={{fontSize:"17px",fontWeight:"700",color:"#111827",marginBottom:"6px"}}>Current field conditions</div>
+            <div style={{fontSize:"13px",color:GRAY,marginBottom:"22px"}}>Adjust sliders to match your farm right now.</div>
+
+            <div style={{background:"#f0fdf4",border:"1px solid #a7f3d0",borderRadius:"12px",padding:"16px",marginBottom:"20px"}}>
+              <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:"8px"}}>
+                <div style={{fontSize:"13px",fontWeight:"700",color:"#065f46"}}>Soil Moisture Status</div>
+                <div style={{fontSize:"13px",fontWeight:"800",color:irrColor}}>{irrStatus}</div>
+              </div>
+              <SliderRow label={"Current Soil Moisture (m\xb3/m\xb3)"} value={th} onChange={setTh} min={0.10} max={0.44} step={0.01} display={th.toFixed(2)}/>
+              {/* moisture scale */}
+              <div style={{display:"flex",gap:"4px",marginTop:"6px"}}>
+                {[
+                  ["Wilting",soil.wp,"#dc2626"],
+                  ["Field cap",soil.fc,"#059669"],
+                  ["Saturation",soil.sat,"#0d9488"]
+                ].map(function(m) {
+                  return (
+                    <div key={m[0]} style={{flex:"1",background:"#fff",border:"1px solid #d1fae5",borderRadius:"6px",padding:"5px",textAlign:"center"}}>
+                      <div style={{fontSize:"9px",color:GRAY}}>{m[0]}</div>
+                      <div style={{fontSize:"12px",fontWeight:"700",color:m[2],fontFamily:"monospace"}}>{m[1].toFixed(2)}</div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"16px",marginBottom:"16px"}}>
+              <div>
+                <SliderRow label={"Temperature (\xb0C)"} value={temp} onChange={setTemp} min={-5} max={50} step={1} display={temp+"\xb0C"}/>
+                <SliderRow label={"Rainfall (mm/month)"} value={rain} onChange={setRain} min={0} max={400} step={5} display={rain+" mm"}/>
+              </div>
+              <div>
+                <SliderRow label={"Wind Speed (km/h)"} value={wind} onChange={setWind} min={0} max={80} step={1} display={wind+" km/h"}/>
+                <SliderRow label={"Humidity (%)"} value={rh} onChange={setRh} min={10} max={100} step={5} display={rh+"%"}/>
+              </div>
+            </div>
+
+            <div style={{background:"#f9fafb",border:"1px solid #e5e7eb",borderRadius:"8px",padding:"12px",marginBottom:"20px",display:"flex",gap:"20px",flexWrap:"wrap"}}>
+              <div><span style={{fontSize:"12px",color:GRAY}}>Reference ET₀: </span><strong style={{color:GREEN,fontFamily:"monospace",fontSize:"13px"}}>{eto.toFixed(2)} mm/day</strong></div>
+              <div><span style={{fontSize:"12px",color:GRAY}}>Crop ET⁣: </span><strong style={{color:GREEN,fontFamily:"monospace",fontSize:"13px"}}>{(eto*crop.kc).toFixed(2)} mm/day</strong></div>
+              <div><span style={{fontSize:"12px",color:GRAY}}>Deficit: </span><strong style={{color:deficit>0?"#f97316":GREEN,fontFamily:"monospace",fontSize:"13px"}}>{deficit>0?deficit.toFixed(3)+" m\xb3/m\xb3":"None"}</strong></div>
+            </div>
+
+            <div style={{display:"flex",gap:"10px"}}>
+              <button onClick={function(){setStep(1);}} style={{padding:"14px 20px",background:"#fff",color:GRAY,border:"1px solid #e5e7eb",borderRadius:"10px",fontWeight:"600",fontSize:"14px"}}>
+                &larr; Back
+              </button>
+              <button onClick={runForecast} disabled={loading} style={{flex:"1",padding:"14px",background:loading?"#6ee7b7":GREEN,color:"#fff",border:"none",borderRadius:"10px",fontWeight:"700",fontSize:"15px"}}>
+                {loading ? "Running Neural MPC…" : "Run 7-Day Forecast →"}
               </button>
             </div>
           </div>
         )}
-        {tab==="forecast"&&(
-          ran ? (
-            <div>
-              <Card title="7-Day FNO Soil Moisture Forecast">
-                <div style={{fontSize:"12px",color:GRAY,marginBottom:"10px"}}>Green = Neural MPC | Red dashed = Threshold | Shaded = 90% CI</div>
-                <ForecastCanvas mpc={mpc} thr={thr} bands={bands} sk={sk} ck={ck}/>
-              </Card>
-              <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:"12px",marginTop:"16px"}}>
-                <Stat val={th.toFixed(3)} label="Current moisture" sub={"FC: "+soil.fc.toFixed(2)}/>
-                <Stat val={deficit>0?deficit.toFixed(3)+" m\u00b3/m\u00b3":"None"} label="Moisture deficit" sub={"Target: "+crop.tgt.toFixed(2)}/>
-                <Stat val={savPct.toFixed(1)+"%"} label="Predicted savings" sub="vs threshold"/>
+
+        {/* Step 3: Forecast Results */}
+        {step===3&&(
+          <div>
+            <div style={{background:"#fff",border:"1px solid #e5e7eb",borderRadius:"16px",padding:"28px",marginBottom:"16px"}}>
+              <div style={{fontSize:"17px",fontWeight:"700",color:"#111827",marginBottom:"4px"}}>7-Day FNO Soil Moisture Forecast</div>
+              <div style={{fontSize:"12px",color:GRAY,marginBottom:"14px"}}>
+                <span style={{color:GREEN,fontWeight:"700"}}>&#9644; Neural MPC</span>
+                {"  "}
+                <span style={{color:"#f87171",fontWeight:"700"}}>&#9472;&#9472; Threshold</span>
+                {"  "}
+                <span style={{color:"#6ee7b7",fontWeight:"700"}}>&#9618; 90% CI</span>
+              </div>
+              <ForecastCanvas mpc={mpc} thr={thr} bands={bands} sk={sk} ck={ck}/>
+            </div>
+
+            <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:"10px",marginBottom:"16px"}}>
+              <Stat val={th.toFixed(3)} label={"Soil moisture"} sub={"m\xb3/m\xb3 now"}/>
+              <Stat val={deficit>0?"-"+deficit.toFixed(3):"0.000"} label={"Deficit"} sub={"vs crop target"}/>
+              <Stat val={savPct.toFixed(1)+"%"} label={"Predicted saving"} sub={"vs threshold ctrl"}/>
+              <Stat val={mpc.length?mpc[mpc.length-1].toFixed(3):"—"} label={"Day 7 moisture"} sub={"Neural MPC"}/>
+            </div>
+
+            {/* Day-by-day table */}
+            <div style={{background:"#fff",border:"1px solid #e5e7eb",borderRadius:"16px",padding:"28px",marginBottom:"16px"}}>
+              <div style={{fontSize:"14px",fontWeight:"700",color:"#111827",marginBottom:"14px"}}>Day-by-Day Comparison</div>
+              <table style={{width:"100%",borderCollapse:"collapse",fontSize:"13px"}}>
+                <thead>
+                  <tr>
+                    {["Day","Neural MPC","Threshold","Diff","Status"].map(function(h){
+                      return <th key={h} style={{background:"#f0fdf4",color:"#374151",fontWeight:"700",padding:"8px 10px",textAlign:"left",fontSize:"11px",borderBottom:"1px solid #a7f3d0"}}>{h}</th>;
+                    })}
+                  </tr>
+                </thead>
+                <tbody>
+                  {mpc.map(function(v,i){
+                    var tv=thr[i]||0;
+                    var diff=(v-tv);
+                    var st=v<soil.wp+0.01?"Wilting risk":v<crop.tgt-0.03?"Deficit":v<crop.tgt?"Low":"Optimal";
+                    var stc=v<soil.wp+0.01?"#dc2626":v<crop.tgt-0.03?"#f97316":v<crop.tgt?"#0d9488":GREEN;
+                    return (
+                      <tr key={i} style={{background:i%2===0?"#fafafa":"#fff"}}>
+                        <td style={{padding:"8px 10px",color:"#374151",fontWeight:"600"}}>Day {i}</td>
+                        <td style={{padding:"8px 10px",color:GREEN,fontWeight:"700",fontFamily:"monospace"}}>{v.toFixed(3)}</td>
+                        <td style={{padding:"8px 10px",color:"#f87171",fontFamily:"monospace"}}>{tv.toFixed(3)}</td>
+                        <td style={{padding:"8px 10px",fontFamily:"monospace",color:diff>0?"#059669":"#f97316"}}>{diff>0?"+":""}{diff.toFixed(3)}</td>
+                        <td style={{padding:"8px 10px"}}><span style={{background:stc+"22",color:stc,borderRadius:"4px",padding:"2px 8px",fontSize:"11px",fontWeight:"700"}}>{st}</span></td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+
+            <div style={{display:"flex",gap:"10px"}}>
+              <button onClick={function(){setStep(2);}} style={{padding:"13px 20px",background:"#fff",color:GRAY,border:"1px solid #e5e7eb",borderRadius:"10px",fontWeight:"600",fontSize:"14px"}}>
+                &larr; Adjust
+              </button>
+              <button onClick={function(){setStep(4);}} style={{flex:"1",padding:"13px",background:GREEN,color:"#fff",border:"none",borderRadius:"10px",fontWeight:"700",fontSize:"15px"}}>
+                See Economic Impact &rarr;
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* Step 4: Impact */}
+        {step===4&&(
+          <div>
+            <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"14px",marginBottom:"14px"}}>
+              <div style={{background:"#fff",border:"1px solid #e5e7eb",borderRadius:"16px",padding:"24px"}}>
+                <div style={{fontSize:"14px",fontWeight:"700",color:"#111827",marginBottom:"14px"}}>Annual Impact — {ha} ha</div>
+                {[
+                  ["Region", reg],
+                  ["Crop", ck+" on "+sk],
+                  ["Baseline water", (ha*rd.base).toLocaleString()+" m\xb3/yr"],
+                  ["Predicted saving", savPct.toFixed(1)+"%"],
+                  ["Water saved", wSaved.toLocaleString()+" m\xb3/yr"],
+                  ["Cost saved", "$"+cSaved.toLocaleString()+"/yr"],
+                  ["Water price", "$"+rd.cost+"/m\xb3"],
+                ].map(function(row){
+                  return (
+                    <div key={row[0]} style={{display:"flex",justifyContent:"space-between",padding:"8px 0",borderBottom:"1px solid #f3f4f6",fontSize:"13px"}}>
+                      <span style={{color:GRAY}}>{row[0]}</span>
+                      <span style={{fontWeight:"700",color:GREEN}}>{row[1]}</span>
+                    </div>
+                  );
+                })}
+              </div>
+              <div style={{background:"#fff",border:"1px solid #e5e7eb",borderRadius:"16px",padding:"24px"}}>
+                <div style={{fontSize:"14px",fontWeight:"700",color:"#111827",marginBottom:"14px"}}>Scale-Up Impact</div>
+                {[[10,"Smallholder"],[100,"Mid-size"],[10000,"Regional"],[500000,"National"]].map(function(item){
+                  var sz=item[0], lbl=item[1];
+                  var w=Math.round(sz*rd.base*savPct/100), c=Math.round(w*rd.cost);
+                  return (
+                    <div key={sz} style={{display:"flex",justifyContent:"space-between",alignItems:"center",padding:"9px 0",borderBottom:"1px solid #f3f4f6"}}>
+                      <div>
+                        <div style={{fontSize:"13px",fontWeight:"600",color:"#374151"}}>{lbl}</div>
+                        <div style={{fontSize:"11px",color:GRAY}}>{sz.toLocaleString()} ha</div>
+                      </div>
+                      <div style={{textAlign:"right"}}>
+                        <div style={{fontSize:"11px",color:TEAL,fontWeight:"700"}}>{w>=1e6?(w/1e6).toFixed(1)+"M":w.toLocaleString()} m\xb3/yr</div>
+                        <div style={{fontFamily:"'Playfair Display',serif",fontSize:"16px",fontWeight:"700",color:GREEN}}>${c>=1e6?(c/1e6).toFixed(0)+"M":c.toLocaleString()}/yr</div>
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
             </div>
-          ) : (
-            <Card title="">
-              <div style={{textAlign:"center",padding:"48px 0"}}>
-                <div style={{fontSize:"48px",marginBottom:"12px"}}>--</div>
-                <div style={{fontSize:"15px",fontWeight:"600",color:"#374151",marginBottom:"8px"}}>No forecast yet</div>
-                <div style={{fontSize:"13px",color:GRAY,marginBottom:"16px"}}>Set parameters on Inputs tab, then click Run.</div>
-                <button onClick={function(){setTab("inputs");}} style={{background:"none",color:GREEN,border:"1px solid "+BORDER,borderRadius:"10px",padding:"9px 20px",fontWeight:"700",fontSize:"14px"}}>Go to Inputs</button>
-              </div>
-            </Card>
-          )
-        )}
-        {tab==="impact"&&(
-          <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"16px"}}>
-            <Card title={"Annual Impact \u2014 "+ha+" ha"}>
-              {[["Region",reg],["Baseline",(ha*rd.base).toLocaleString()+" m\u00b3/yr"],["Savings",savPct.toFixed(1)+"%"],["Water saved",wSaved.toLocaleString()+" m\u00b3/yr"],["Cost saved","$"+cSaved.toLocaleString()+"/yr"],["Water price","$"+rd.cost+"/m\u00b3"]].map(function(row) {
-                return (
-                  <div key={row[0]} style={{display:"flex",justifyContent:"space-between",padding:"8px 0",borderBottom:"1px solid #f3f4f6",fontSize:"13px"}}>
-                    <span style={{color:GRAY}}>{row[0]}</span>
-                    <span style={{fontWeight:"700",color:GREEN}}>{row[1]}</span>
-                  </div>
-                );
-              })}
-            </Card>
-            <Card title="Scaling Impact">
-              {[[10,"Smallholder"],[100,"Mid-size"],[10000,"Regional"],[500000,"National"]].map(function(item) {
-                var sz=item[0], label=item[1];
-                var w=Math.round(sz*rd.base*savPct/100), cost=Math.round(w*rd.cost);
-                return (
-                  <div key={sz} style={{display:"flex",justifyContent:"space-between",alignItems:"center",padding:"10px 0",borderBottom:"1px solid #f3f4f6"}}>
-                    <div>
-                      <div style={{fontSize:"13px",fontWeight:"600",color:"#374151"}}>{label}</div>
-                      <div style={{fontSize:"11px",color:GRAY}}>{sz.toLocaleString()} ha</div>
-                    </div>
-                    <div style={{textAlign:"right"}}>
-                      <div style={{fontSize:"11px",color:TEAL,fontWeight:"700"}}>{w>=1e6?(w/1e6).toFixed(1)+"M":w.toLocaleString()} m\u00b3/yr</div>
-                      <div style={{fontFamily:"'Playfair Display',serif",fontSize:"17px",fontWeight:"700",color:GREEN}}>${cost>=1e6?(cost/1e6).toFixed(0)+"M":cost.toLocaleString()}/yr</div>
-                    </div>
-                  </div>
-                );
-              })}
-            </Card>
+            <div style={{display:"flex",gap:"10px"}}>
+              <button onClick={function(){setStep(3);}} style={{padding:"13px 20px",background:"#fff",color:GRAY,border:"1px solid #e5e7eb",borderRadius:"10px",fontWeight:"600",fontSize:"14px"}}>
+                &larr; Forecast
+              </button>
+              <button onClick={function(){setStep(1);setMpc([]);setThr([]);setBands([]);}} style={{flex:"1",padding:"13px",background:"#064e3b",color:"#fff",border:"none",borderRadius:"10px",fontWeight:"700",fontSize:"15px"}}>
+                Start New Analysis
+              </button>
+            </div>
           </div>
         )}
       </div>
@@ -800,7 +946,7 @@ function ResearchPage() {
                       <Tag green={p.mpc}>{p.group}</Tag>
                     </div>
                     <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"8px",marginBottom:"10px"}}>
-                      <div><div style={{fontSize:"10px",color:GRAY}}>Final moisture</div><div style={{fontSize:"14px",fontWeight:"700"}}>{p.tf.toFixed(2)} m\u00b3/m\u00b3</div></div>
+                      <div><div style={{fontSize:"10px",color:GRAY}}>Final moisture</div><div style={{fontSize:"14px",fontWeight:"700"}}>{p.tf.toFixed(2)} m³/m³</div></div>
                       <div><div style={{fontSize:"10px",color:GRAY}}>Total water</div><div style={{fontSize:"14px",fontWeight:"700"}}>{p.water} mL</div></div>
                     </div>
                     <MiniGraph data={p.hist} color={col} h={32}/>
@@ -819,7 +965,7 @@ function ResearchPage() {
                   </tr>
                 </thead>
                 <tbody>
-                  {[["Total water","109.0 mL","72.6 mL","\u221233.4%"],["Irrigations","22","14","\u221236.4%"],["Time below optimal","18.2%","4.1%","\u221277.5%"],["Min moisture","0.18","0.20","+11.1%"],["Final height","23.1 cm","23.5 cm","+0.4 cm"],["Wilting events","0","0","Same"]].map(function(row) {
+                  {[["Total water","109.0 mL","72.6 mL","−33.4%"],["Irrigations","22","14","−36.4%"],["Time below optimal","18.2%","4.1%","−77.5%"],["Min moisture","0.18","0.20","+11.1%"],["Final height","23.1 cm","23.5 cm","+0.4 cm"],["Wilting events","0","0","Same"]].map(function(row) {
                     return (
                       <tr key={row[0]}>
                         {[row[0],row[1],row[2]].map(function(v) { return <td key={v} style={{padding:"9px 10px",borderBottom:"1px solid #f9fafb",color:"#374151"}}>{v}</td>; })}
@@ -943,24 +1089,24 @@ function LearnPage() {
   var _lesson=useState(null); var lesson=_lesson[0]; var setLesson=_lesson[1];
   var LESSONS=[
     {id:1,title:"Why Smart Irrigation?",level:"Beginner",mins:4,
-     body:"Agriculture uses 70% of all freshwater globally. Most farms irrigate on fixed schedules or react only when soil gets dry, wasting water when rain is coming.\n\nWaterWise predicts soil moisture 7 days ahead and plans accordingly. Like a weather forecast for your root zone.\n\nResult: 24\u201336% less water used, zero impact on yield, runs on $60 of hardware."},
+     body:"Agriculture uses 70% of all freshwater globally. Most farms irrigate on fixed schedules or react only when soil gets dry, wasting water when rain is coming.\n\nWaterWise predicts soil moisture 7 days ahead and plans accordingly. Like a weather forecast for your root zone.\n\nResult: 24–36% less water used, zero impact on yield, runs on $60 of hardware."},
     {id:2,title:"How Soil Water Works",level:"Beginner",mins:6,
-     body:"Soil moisture (\u03b8) is measured in m\u00b3 of water per m\u00b3 of soil. Three key thresholds:\n\n- Saturation (~0.45): All pores full. Runoff and root damage risk.\n- Field Capacity (~0.30): Ideal. Water held against gravity.\n- Wilting Point (~0.20): Plant cannot extract water. Permanent damage.\n\nWater movement follows the Richards equation:\n\n  \u2202\u03b8/\u2202t = \u2207\u00b7[K(\u03b8)\u00b7\u2207\u03c8] + S\n\nThis is nonlinear and expensive to solve, which is why WaterWise uses a neural network."},
+     body:"Soil moisture (θ) is measured in m³ of water per m³ of soil. Three key thresholds:\n\n- Saturation (~0.45): All pores full. Runoff and root damage risk.\n- Field Capacity (~0.30): Ideal. Water held against gravity.\n- Wilting Point (~0.20): Plant cannot extract water. Permanent damage.\n\nWater movement follows the Richards equation:\n\n  ∂θ/∂t = ∇·[K(θ)·∇ψ] + S\n\nThis is nonlinear and expensive to solve, which is why WaterWise uses a neural network."},
     {id:3,title:"The Neural Prediction Model",level:"Intermediate",mins:8,
-     body:"A Fourier Neural Operator (FNO) learns the mapping G: \u03b8(x,0) \u2192 \u03b8(x,t).\n\nSteps:\n1. Input soil moisture \u2192 Fast Fourier Transform\n2. Learned weights multiply top 12 frequency modes\n3. Inverse FFT back to spatial domain\n4. Add local linear bypass\n5. Repeat for 4 layers\n\nTrained on 9 years of NASA SMAP data (2015\u20132024).\nInference: ~3ms vs ~4 hours for numerical solver.\nValidated: slope \u22121.34 (theory \u22121.5), R\u00b2=0.927."},
+     body:"A Fourier Neural Operator (FNO) learns the mapping G: θ(x,0) → θ(x,t).\n\nSteps:\n1. Input soil moisture → Fast Fourier Transform\n2. Learned weights multiply top 12 frequency modes\n3. Inverse FFT back to spatial domain\n4. Add local linear bypass\n5. Repeat for 4 layers\n\nTrained on 9 years of NASA SMAP data (2015–2024).\nInference: ~3ms vs ~4 hours for numerical solver.\nValidated: slope −1.34 (theory −1.5), R²=0.927."},
     {id:4,title:"Handling Uncertainty",level:"Intermediate",mins:7,
-     body:"Real soil is not uniform. WaterWise adds stochastic noise:\n\n  d\u03b8 = f(\u03b8)dt + \u03c3(x,\u03b8)dW(t)\n\nWhere W(t) is Brownian motion and \u03c3 is a learned noise function.\n\nThis gives probabilistic forecasts: not just '\u03b8 will be 0.28' but '0.28 \u00b1 0.025 with 90% confidence.'\n\n500 Monte Carlo samples take ~1.5 seconds. KL = 0.047 validates the uncertainty structure."},
+     body:"Real soil is not uniform. WaterWise adds stochastic noise:\n\n  dθ = f(θ)dt + σ(x,θ)dW(t)\n\nWhere W(t) is Brownian motion and σ is a learned noise function.\n\nThis gives probabilistic forecasts: not just 'θ will be 0.28' but '0.28 ± 0.025 with 90% confidence.'\n\n500 Monte Carlo samples take ~1.5 seconds. KL = 0.047 validates the uncertainty structure."},
     {id:5,title:"The Irrigation Controller",level:"Advanced",mins:9,
-     body:"Threshold control: irrigate when \u03b8 < 0.25. Simple but wasteful.\n\nModel Predictive Control (MPC): every 12 hours, solve:\n\n  min E[ \u03a3 \u03b1\u00b7u\u00b2 + \u03b2\u00b7(\u03b8 \u2212 \u03b8*)\u00b2 ]\n  subject to P(\u03b8 \u2265 \u03b8_crit) \u2265 0.95\n\n1. FNO gives 7-day forecast (500 Monte Carlo paths)\n2. MPC solves the optimization\n3. Only first command applied (receding horizon)\n4. Re-optimize next step\n\nResult: 36% fewer events, 33% less water, zero wilting events."}
+     body:"Threshold control: irrigate when θ < 0.25. Simple but wasteful.\n\nModel Predictive Control (MPC): every 12 hours, solve:\n\n  min E[ Σ α·u² + β·(θ − θ*)² ]\n  subject to P(θ ≥ θ_crit) ≥ 0.95\n\n1. FNO gives 7-day forecast (500 Monte Carlo paths)\n2. MPC solves the optimization\n3. Only first command applied (receding horizon)\n4. Re-optimize next step\n\nResult: 36% fewer events, 33% less water, zero wilting events."}
   ];
   if(lesson!==null) {
     var L=LESSONS[lesson];
     return (
       <div>
-        <InnerHero label="Education" title={L.title} sub={L.level+" \u2014 "+L.mins+" min read"}/>
+        <InnerHero label="Education" title={L.title} sub={L.level+" — "+L.mins+" min read"}/>
         <div style={{maxWidth:"680px",margin:"0 auto",padding:"32px 40px 72px"}}>
           <button onClick={function(){setLesson(null);}} style={{background:"none",color:GREEN,border:"1px solid "+BORDER,borderRadius:"8px",padding:"7px 16px",fontWeight:"600",fontSize:"13px",marginBottom:"20px",fontFamily:"inherit"}}>
-            \u2190 Back to Lessons
+            ← Back to Lessons
           </button>
           <Card title="">
             <div style={{fontSize:"13px",color:"#374151",lineHeight:"2.1",whiteSpace:"pre-line",fontFamily:"monospace"}}>{L.body}</div>
@@ -989,7 +1135,7 @@ function LearnPage() {
                   </div>
                 </div>
                 <div style={{fontSize:"15px",fontWeight:"700",color:"#111827",marginBottom:"6px"}}>{l.title}</div>
-                <div style={{fontSize:"13px",color:GREEN,fontWeight:"600"}}>Read lesson \u2192</div>
+                <div style={{fontSize:"13px",color:GREEN,fontWeight:"600"}}>Read lesson →</div>
               </div>
             );
           })}
@@ -1048,7 +1194,7 @@ function ImpactPage() {
       <InnerHero label="Real-World Impact" title="What saving water really means." sub="At 500,000 hectares, WaterWise saves 660 million cubic metres of water per year."/>
       <div style={{maxWidth:"1060px",margin:"0 auto",padding:"32px 40px 72px"}}>
         <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:"12px",marginBottom:"28px"}}>
-          {[["660M m\u00b3","Water saved/yr","At 500K ha"],["$99M","Annual savings","At 500K ha"],["244K t","CO\u2082 reduced","Less pumping"],["14 sites","Validated","6 continents"]].map(function(item) {
+          {[["660M m³","Water saved/yr","At 500K ha"],["$99M","Annual savings","At 500K ha"],["244K t","CO₂ reduced","Less pumping"],["14 sites","Validated","6 continents"]].map(function(item) {
             return (
               <div key={item[1]} style={{background:"#fff",border:"1px solid "+BORDER,borderRadius:"14px",padding:"20px 12px",textAlign:"center"}}>
                 <div style={{fontFamily:"'Playfair Display',serif",fontSize:"22px",fontWeight:"700",color:GREEN}}>{item[0]}</div>
@@ -1060,7 +1206,7 @@ function ImpactPage() {
         </div>
         <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"16px"}}>
           <Card title="Farm-level savings (Kentucky)">
-            <div style={{fontSize:"12px",color:GRAY,marginBottom:"12px"}}>8,000 m\u00b3/ha baseline, $0.22/m\u00b3, 34% savings</div>
+            <div style={{fontSize:"12px",color:GRAY,marginBottom:"12px"}}>8,000 m³/ha baseline, $0.22/m³, 34% savings</div>
             {[[10,"Smallholder","Family farm"],[100,"Mid-size","Commercial"],[1000,"Large farm","Producer"],[10000,"Cooperative","Regional"]].map(function(item) {
               var ha=item[0], label=item[1], desc=item[2];
               var saved=Math.round(ha*8000*0.34), dollars=Math.round(saved*0.22);
@@ -1071,7 +1217,7 @@ function ImpactPage() {
                     <div style={{fontSize:"11px",color:GRAY}}>{desc} &mdash; {ha.toLocaleString()} ha</div>
                   </div>
                   <div style={{textAlign:"right"}}>
-                    <div style={{fontSize:"11px",color:TEAL,fontWeight:"700"}}>{(saved/1000).toFixed(0)}K m\u00b3/yr</div>
+                    <div style={{fontSize:"11px",color:TEAL,fontWeight:"700"}}>{(saved/1000).toFixed(0)}K m³/yr</div>
                     <div style={{fontFamily:"'Playfair Display',serif",fontSize:"16px",fontWeight:"700",color:GREEN}}>${dollars.toLocaleString()}/yr</div>
                   </div>
                 </div>
@@ -1082,7 +1228,7 @@ function ImpactPage() {
             <p style={{fontSize:"14px",color:GRAY,lineHeight:"1.8",marginBottom:"14px"}}>
               In 2022&ndash;2023, more than 60% of Kentucky was under severe drought. River levels dropped to multi-decade lows. Many counties declared agricultural emergencies.
             </p>
-            {[["60%+","of KY under drought","2022\u20132023"],["40% below","normal rainfall","Central KY, summer 2023"],["$380M+","estimated crop losses","KY drought damage"]].map(function(item) {
+            {[["60%+","of KY under drought","2022–2023"],["40% below","normal rainfall","Central KY, summer 2023"],["$380M+","estimated crop losses","KY drought damage"]].map(function(item) {
               return (
                 <div key={item[0]} style={{background:"#fff7ed",border:"1px solid #fed7aa",borderRadius:"8px",padding:"10px",marginBottom:"8px"}}>
                   <div style={{fontFamily:"'Playfair Display',serif",fontSize:"18px",fontWeight:"700",color:"#f97316"}}>{item[0]}</div>
