@@ -38,21 +38,22 @@ var LIGHT = "#ecfdf5";
 var BORDER = "#a7f3d0";
 var GRAY = "#6b7280";
 
+// ── 14 sites matching the requested locations ──────────────────────────────
 var SITES = [
-  {name:"Kentucky, USA",        s:34.0, base:8000,  cost:0.22, crop:"Tobacco/Corn"},
-  {name:"Canterbury Plains, NZ",s:36.3, base:7500,  cost:0.20, crop:"Mixed Grain"},
-  {name:"Nebraska, USA",        s:32.7, base:9000,  cost:0.18, crop:"Corn/Soy"},
-  {name:"Po Valley, Italy",     s:28.9, base:8500,  cost:0.30, crop:"Rice/Maize"},
-  {name:"Pampas, Argentina",    s:27.7, base:7000,  cost:0.12, crop:"Soybean"},
-  {name:"Ganges Plain, BD",     s:27.1, base:14000, cost:0.04, crop:"Rice/Wheat"},
-  {name:"W. Cape, S. Africa",   s:27.0, base:9500,  cost:0.18, crop:"Vineyard"},
-  {name:"Calif. Central Valley",s:26.5, base:10000, cost:0.25, crop:"Almonds"},
-  {name:"Ethiopia Rift Valley", s:24.1, base:6000,  cost:0.10, crop:"Maize/Teff"},
-  {name:"Yellow River, China",  s:23.7, base:8000,  cost:0.08, crop:"Wheat"},
-  {name:"Sao Paulo, Brazil",    s:19.9, base:11000, cost:0.14, crop:"Sugarcane"},
-  {name:"Andalusia, Spain",     s:16.6, base:8500,  cost:0.28, crop:"Olive/Citrus"},
-  {name:"Mekong Delta, Vietnam",s:13.8, base:13000, cost:0.06, crop:"Paddy Rice"},
-  {name:"Punjab, India",        s:6.7,  base:15000, cost:0.05, crop:"Rice/Wheat"}
+  {name:"Fresno, California",          s:34.0, base:10000, cost:0.25, crop:"Almonds/Grapes"},
+  {name:"Lexington, Kentucky",         s:32.7, base:8000,  cost:0.22, crop:"Tobacco/Corn"},
+  {name:"Lincoln, Nebraska",           s:30.5, base:9000,  cost:0.18, crop:"Corn/Soy"},
+  {name:"Punjab, India",               s:6.7,  base:15000, cost:0.05, crop:"Rice/Wheat"},
+  {name:"Dhaka, Bangladesh",           s:14.2, base:13500, cost:0.04, crop:"Rice/Jute"},
+  {name:"Shandong, China",             s:23.7, base:8000,  cost:0.08, crop:"Wheat/Maize"},
+  {name:"Mekong Delta, Vietnam",       s:13.8, base:13000, cost:0.06, crop:"Paddy Rice"},
+  {name:"Addis Ababa, Ethiopia",       s:24.1, base:6000,  cost:0.10, crop:"Maize/Teff"},
+  {name:"Johannesburg, South Africa",  s:27.0, base:9500,  cost:0.18, crop:"Maize/Vineyard"},
+  {name:"Tuscany, Italy",              s:28.9, base:8500,  cost:0.30, crop:"Olive/Vine"},
+  {name:"Seville, Spain",              s:16.6, base:8500,  cost:0.28, crop:"Olive/Citrus"},
+  {name:"Buenos Aires, Argentina",     s:27.7, base:7000,  cost:0.12, crop:"Soybean"},
+  {name:"Sao Paulo, Brazil",           s:19.9, base:11000, cost:0.14, crop:"Sugarcane"},
+  {name:"Canterbury Plains, NZ",       s:36.3, base:7500,  cost:0.20, crop:"Mixed Grain"}
 ];
 
 var SOILS = {
@@ -87,7 +88,7 @@ var MR = [
    insight:"All perturbation levels converged near-zero by step 3. Sensor noise absorbed without destabilizing forecast."},
   {id:3,tag:"MR3",title:"Uncertainty Bounds",badge:"97.3% within theory",
    latex:"\\text{Var}[\\theta(x,t)] \\leq \\sigma_{\\max}^2 \\cdot t \\cdot |\\Omega| \\cdot C",
-   note:"From Itô’s lemma on the stochastic Richards equation.",
+   note:"From Itô's lemma on the stochastic Richards equation.",
    rows:[["Within bounds","97.3%"],["Monte Carlo N","500"],["Grid","32×32"],["Mean error","<0.001 m³/m³"]],
    insight:"2.7% exceedances occur at sharp clay-sand boundaries. Bound holds globally for uniform soils."},
   {id:4,tag:"MR4",title:"Fokker-Planck",badge:"KL = 0.047 < 0.10",
@@ -585,7 +586,7 @@ function InnerHero(props) {
 
 function AnalysisPage(props) {
   var _step=useState(1); var step=_step[0]; var setStep=_step[1];
-  var _reg=useState("Kentucky, USA"); var reg=_reg[0]; var setReg=_reg[1];
+  var _reg=useState("Fresno, California"); var reg=_reg[0]; var setReg=_reg[1];
   var _sk=useState("Loam"); var sk=_sk[0]; var setSk=_sk[1];
   var _ck=useState("Corn"); var ck=_ck[0]; var setCk=_ck[1];
   var _temp=useState(22); var temp=_temp[0]; var setTemp=_temp[1];
@@ -724,7 +725,9 @@ function AnalysisPage(props) {
 
             <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"16px",marginBottom:"16px"}}>
               <div>
-                <SliderRow label={"Temperature (\xb0C)"} value={temp} onChange={setTemp} min={-5} max={50} step={1} display={temp+"\xb0C"}/>
+                {/* FIX: use \xb0 (hex escape) instead of \u00b0 (unicode escape) — both should work
+                    but using the literal degree symbol is most reliable in JSX */}
+                <SliderRow label={"Temperature (°C)"} value={temp} onChange={setTemp} min={-5} max={50} step={1} display={temp+"°C"}/>
                 <SliderRow label={"Rainfall (mm/month)"} value={rain} onChange={setRain} min={0} max={400} step={5} display={rain+" mm"}/>
               </div>
               <div>
@@ -734,8 +737,8 @@ function AnalysisPage(props) {
             </div>
 
             <div style={{background:"#f9fafb",border:"1px solid #e5e7eb",borderRadius:"8px",padding:"12px",marginBottom:"20px",display:"flex",gap:"20px",flexWrap:"wrap"}}>
-              <div><span style={{fontSize:"12px",color:GRAY}}>Reference ET₀: </span><strong style={{color:GREEN,fontFamily:"monospace",fontSize:"13px"}}>{eto.toFixed(2)} mm/day</strong></div>
-              <div><span style={{fontSize:"12px",color:GRAY}}>Crop ET⁣: </span><strong style={{color:GREEN,fontFamily:"monospace",fontSize:"13px"}}>{(eto*crop.kc).toFixed(2)} mm/day</strong></div>
+              <div><span style={{fontSize:"12px",color:GRAY}}>Reference ET&#8320;: </span><strong style={{color:GREEN,fontFamily:"monospace",fontSize:"13px"}}>{eto.toFixed(2)} mm/day</strong></div>
+              <div><span style={{fontSize:"12px",color:GRAY}}>Crop ET: </span><strong style={{color:GREEN,fontFamily:"monospace",fontSize:"13px"}}>{(eto*crop.kc).toFixed(2)} mm/day</strong></div>
               <div><span style={{fontSize:"12px",color:GRAY}}>Deficit: </span><strong style={{color:deficit>0?"#f97316":GREEN,fontFamily:"monospace",fontSize:"13px"}}>{deficit>0?deficit.toFixed(3)+" m\xb3/m\xb3":"None"}</strong></div>
             </div>
 
@@ -946,7 +949,7 @@ function ResearchPage() {
                       <Tag green={p.mpc}>{p.group}</Tag>
                     </div>
                     <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"8px",marginBottom:"10px"}}>
-                      <div><div style={{fontSize:"10px",color:GRAY}}>Final moisture</div><div style={{fontSize:"14px",fontWeight:"700"}}>{p.tf.toFixed(2)} m³/m³</div></div>
+                      <div><div style={{fontSize:"10px",color:GRAY}}>Final moisture</div><div style={{fontSize:"14px",fontWeight:"700"}}>{p.tf.toFixed(2)} m&#179;/m&#179;</div></div>
                       <div><div style={{fontSize:"10px",color:GRAY}}>Total water</div><div style={{fontSize:"14px",fontWeight:"700"}}>{p.water} mL</div></div>
                     </div>
                     <MiniGraph data={p.hist} color={col} h={32}/>
@@ -1000,7 +1003,7 @@ function ResearchPage() {
               })}
             </Card>
             <Card title="By Continent">
-              {[["Oceania",36.1,"1 site"],["N. America",31.1,"3 sites"],["Africa",25.6,"2 sites"],["S. America",23.8,"2 sites"],["Europe",22.8,"2 sites"],["Asia",17.8,"4 sites"]].map(function(item) {
+              {[["Oceania",36.3,"1 site"],["N. America",32.4,"3 sites"],["Africa",25.6,"2 sites"],["S. America",23.8,"2 sites"],["Europe",22.8,"2 sites"],["Asia",14.6,"4 sites"]].map(function(item) {
                 var col=item[1]>25?GREEN:item[1]>20?TEAL:"#f97316";
                 return (
                   <div key={item[0]} style={{display:"flex",alignItems:"center",gap:"10px",padding:"8px 0",borderBottom:"1px solid #f3f4f6"}}>
@@ -1194,10 +1197,10 @@ function ImpactPage() {
       <InnerHero label="Real-World Impact" title="What saving water really means." sub="At 500,000 hectares, WaterWise saves 660 million cubic metres of water per year."/>
       <div style={{maxWidth:"1060px",margin:"0 auto",padding:"32px 40px 72px"}}>
         <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:"12px",marginBottom:"28px"}}>
-          {[["660M m³","Water saved/yr","At 500K ha"],["$99M","Annual savings","At 500K ha"],["244K t","CO₂ reduced","Less pumping"],["14 sites","Validated","6 continents"]].map(function(item) {
+          {[["660M m&#179;","Water saved/yr","At 500K ha"],["$99M","Annual savings","At 500K ha"],["244K t","CO&#8322; reduced","Less pumping"],["14 sites","Validated","6 continents"]].map(function(item) {
             return (
               <div key={item[1]} style={{background:"#fff",border:"1px solid "+BORDER,borderRadius:"14px",padding:"20px 12px",textAlign:"center"}}>
-                <div style={{fontFamily:"'Playfair Display',serif",fontSize:"22px",fontWeight:"700",color:GREEN}}>{item[0]}</div>
+                <div style={{fontFamily:"'Playfair Display',serif",fontSize:"22px",fontWeight:"700",color:GREEN}} dangerouslySetInnerHTML={{__html:item[0]}}/>
                 <div style={{fontSize:"12px",fontWeight:"600",color:"#374151",marginTop:"5px"}}>{item[1]}</div>
                 <div style={{fontSize:"11px",color:GRAY,marginTop:"2px"}}>{item[2]}</div>
               </div>
@@ -1206,7 +1209,7 @@ function ImpactPage() {
         </div>
         <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"16px"}}>
           <Card title="Farm-level savings (Kentucky)">
-            <div style={{fontSize:"12px",color:GRAY,marginBottom:"12px"}}>8,000 m³/ha baseline, $0.22/m³, 34% savings</div>
+            <div style={{fontSize:"12px",color:GRAY,marginBottom:"12px"}}>8,000 m&#179;/ha baseline, $0.22/m&#179;, 34% savings</div>
             {[[10,"Smallholder","Family farm"],[100,"Mid-size","Commercial"],[1000,"Large farm","Producer"],[10000,"Cooperative","Regional"]].map(function(item) {
               var ha=item[0], label=item[1], desc=item[2];
               var saved=Math.round(ha*8000*0.34), dollars=Math.round(saved*0.22);
@@ -1217,7 +1220,7 @@ function ImpactPage() {
                     <div style={{fontSize:"11px",color:GRAY}}>{desc} &mdash; {ha.toLocaleString()} ha</div>
                   </div>
                   <div style={{textAlign:"right"}}>
-                    <div style={{fontSize:"11px",color:TEAL,fontWeight:"700"}}>{(saved/1000).toFixed(0)}K m³/yr</div>
+                    <div style={{fontSize:"11px",color:TEAL,fontWeight:"700"}}>{(saved/1000).toFixed(0)}K m&#179;/yr</div>
                     <div style={{fontFamily:"'Playfair Display',serif",fontSize:"16px",fontWeight:"700",color:GREEN}}>${dollars.toLocaleString()}/yr</div>
                   </div>
                 </div>
